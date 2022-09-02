@@ -1,0 +1,6 @@
+.todoList {
+  position: relative;
+  list-style: none;
+  background-color: #fff;
+  border-bottom: 1px solid #ededed;
+}

@@ -1,0 +1,19 @@
+.filters {
+  display: flex;
+}
+
+.button {
+  border: none;
+  color: #777;
+  background-color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.selected {
+  border-color: rgba(175, 47, 47, 0.2);
+}
+
+.button:not(:last-child){
+  margin-right: 15px;
+}
