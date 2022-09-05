@@ -1,10 +1,19 @@
 import styles from './TodoList.module.css'
 import TodoElem from './todoElem/TodoElem';
 
-function TodoList () {
+function TodoList({ todos, removeTodo, switchTodoCompleted }) {
   return (
     <ul className={styles.todoList}>
-      <TodoElem />
+      {
+        todos.map(todo => (
+          <TodoElem
+            key={todo.id}
+            removeTodo={removeTodo}
+            switchTodoCompleted={switchTodoCompleted}
+            todo={todo}
+          />
+        ))
+      }
     </ul>
   );
 };
