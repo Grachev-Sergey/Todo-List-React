@@ -2,7 +2,7 @@ import styles from './Footer.module.css';
 import Filters from './filters/Filters';
 
 
-function Footer ({todos, activeTodo, allTodo, complitedTodo}) {
+function Footer ({todos, activeTodo, allTodo, complitedTodo, clearComplited}) {
   let numActiveTodos = todos.filter(todo => todo.isComplited === false)
 
   return (
@@ -11,7 +11,7 @@ function Footer ({todos, activeTodo, allTodo, complitedTodo}) {
       {numActiveTodos.length}
       {numActiveTodos.length === 1 ? ' item' : ' items'} left</span>
       <Filters activeTodo={activeTodo} allTodo={allTodo} complitedTodo={complitedTodo}/>
-      <button className={styles.button}>Clear complited</button>
+      <button className={styles.button} onClick={() => clearComplited()}>Clear complited</button>
     </div>
   );
 };

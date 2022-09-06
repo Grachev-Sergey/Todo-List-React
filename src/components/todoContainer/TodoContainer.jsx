@@ -31,21 +31,22 @@ function TodoContainer() {
     setTodos(todos.filter(todo => todo.id !== todoId));
   };
 
+  let adctive = todos.filter(todo => todo.isComplited === false)
   const activeTodo = () => {
-    let adctive = todos.filter(todo => todo.isComplited === false)
     setFiltred(adctive)
-    console.log(todos)
   };
-
+  
   const complitedTodo = () => {
     let done = todos.filter(todo => todo.isComplited === true)
     setFiltred(done)
-    console.log(todos)
   }
   
   const allTodo = () => {
     setFiltred(todos)
-    console.log(todos)
+  };
+
+  const clearComplited = () => {
+    setTodos(adctive)
   };
 
   const switchTodoCompleted = (todoId) => {
@@ -91,7 +92,12 @@ function TodoContainer() {
         removeTodo={removeTodo}
         switchTodoCompleted={switchTodoCompleted}
       />
-      <Footer todos={todos} allTodo={allTodo} activeTodo={activeTodo} complitedTodo={complitedTodo}/>
+      <Footer todos={todos}
+        allTodo={allTodo}
+        activeTodo={activeTodo} 
+        complitedTodo={complitedTodo}
+        clearComplited={clearComplited}
+        />
     </section>
   );
 }
