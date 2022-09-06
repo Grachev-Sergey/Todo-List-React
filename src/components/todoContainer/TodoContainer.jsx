@@ -16,7 +16,7 @@ function TodoContainer() {
 
   const addTodo = () => {
     if (!text.trim()) return;
-    setTodos([
+    const todoElem = [
       ...todos,
       {
         id: new Date().toISOString(),
@@ -24,7 +24,8 @@ function TodoContainer() {
         isComplited: false,
         focused: false,
       }
-    ]);
+    ];
+    setTodos(todoElem);
     setText('');
   };
 
@@ -32,89 +33,80 @@ function TodoContainer() {
     setTodos(todos.filter(todo => todo.id !== todoId));
   };
 
-  let adctive = todos.filter(todo => todo.isComplited === false)
+  const active = todos.filter(todo => !todo.isComplited)
   const activeTodo = () => {
-    setFiltred(adctive)
+    setFiltred(active);
   };
   
   const complitedTodo = () => {
-    let done = todos.filter(todo => todo.isComplited === true)
-    setFiltred(done)
+    const done = todos.filter(todo => todo.isComplited)
+    setFiltred(done);
   }
   
   const allTodo = () => {
-    setFiltred(todos)
+    setFiltred(todos);
   };
 
   const clearComplited = () => {
-    setTodos(adctive)
+    setTodos(active);
   };
 
   const switchTodoCompleted = (todoId) => {
-    setTodos(
-      todos.map(
-        todo => {
-          if (todo.id !== todoId) return todo;
-          return {
-            ...todo,
-            isComplited: !todo.isComplited,
-          }
-        }
-      )
-    )
+    const switchState = todos.map( todo => {
+        if (todo.id !== todoId) return todo;
+        return {
+          ...todo,
+          isComplited: !todo.isComplited,
+        };
+      }
+    );
+    setTodos(switchState);
   };
 
   const changingStateArrow = () => {
-    let arrayState = [];
-    todos.map(todo => arrayState.push(todo.isComplited))
-    setTodos (
-      todos.map((todo) => {
-        if (!arrayState.includes(false))
-        return{
-          ...todo,
-          isComplited: false,
-        }
-        if (!todo.isComplited) 
+    const isEverySelected = todos.every((elem) => elem.isComplited);
+    const switchState = todos.map(
+      todo => {
         return {
           ...todo,
-          isComplited: true,
-        } 
-        if(todo.isComplited)
-        return{
-          ...todo,
-          isComplited: true,
-        }
-      })
-    )
+          isComplited: !isEverySelected
+        };
+      }
+    );
+    setTodos (switchState);
   };
 
-  const swtchFocusInput = (todoId) => {
-    setTodos(
-      todos.map(
-        todo => {
-          if (todo.id !== todoId) return todo;
-          return {
-            ...todo,
-            focused: !todo.focused,
-          };
-        }
-      )
-    )
+  const switchFocusInput = (todoId) => {
+    const switchFocus = todos.map(
+      todo => {
+        if (todo.id !== todoId) return todo;
+        return {
+          ...todo,
+          focused: !todo.focused,
+        };
+      }
+    );
+    setTodos(switchFocus);
   };
 
   const blurInput = (todoId)=> {
-    setTodos(
-      todos.map(
-        todo => {
-          if (todo.id !== todoId) return todo;
-          return {
-            ...todo,
-            focused: false,
-          };
-        }
-      )
-    )
+    const blur = todos.map(
+      todo => {
+        if (todo.id !== todoId) return todo;
+        return {
+          ...todo,
+          focused: false,
+        };
+      }
+    );
+    setTodos(blur);
   };
+
+  // const filteredTodos = todos.filter(i => {
+  //   if (filter === 'completed') {
+  //     return i.isComplited
+  //   }
+  // })
 
   return (
     <section className={styles.todoapp}>
@@ -126,7 +118,7 @@ function TodoContainer() {
       <TodoList todos={filtred}
         removeTodo={removeTodo}
         switchTodoCompleted={switchTodoCompleted}
-        swtchFocusInput={swtchFocusInput}
+        swtchFocusInput={switchFocusInput}
         blurInput={blurInput}
       />
       <Footer todos={todos}

@@ -18,7 +18,6 @@ function TodoElem ({todo, removeTodo, switchTodoCompleted, swtchFocusInput, blur
         readOnly={todo.focused ? false : true}
         onBlur={() => {blurInput(todo.id)}}
         onDoubleClick={(event) => {
-          event.stopPropagation();
           event.preventDefault();
           swtchFocusInput(todo.id)}}
         onKeyDown={(event) => {
