@@ -1,18 +1,13 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
-import styles from './TodoContainer.module.css'
-import Input from './Input/Input';
+import { useMemo, useState } from 'react';
+import styles from './TodoContainer.module.css';
+import Input from './Input';
 import TodoList from './main/TodoList';
 import Footer from './footer/Footer';
 
 function TodoContainer() {
   const [todos, setTodos] = useState([]);
   const [text, setText] = useState('');
-  const [filtred, setFiltred] = useState(todos);
-
-  useEffect(() => {
-    setFiltred(todos)
-  }, [todos])
+  const [filter, setFilter] = useState('all');
 
   const addTodo = () => {
     if (!text.trim()) return;
@@ -30,36 +25,18 @@ function TodoContainer() {
   };
 
   const removeTodo = (todoId) => {
-    setTodos(todos.filter(todo => todo.id !== todoId));
-  };
-
-  const active = todos.filter(todo => !todo.isComplited)
-  const activeTodo = () => {
-    setFiltred(active);
-  };
-  
-  const complitedTodo = () => {
-    const done = todos.filter(todo => todo.isComplited)
-    setFiltred(done);
-  }
-  
-  const allTodo = () => {
-    setFiltred(todos);
-  };
-
-  const clearComplited = () => {
-    setTodos(active);
+    const remainingElements = todos.filter(todo => todo.id !== todoId);
+    setTodos(remainingElements);
   };
 
   const switchTodoCompleted = (todoId) => {
-    const switchState = todos.map( todo => {
-        if (todo.id !== todoId) return todo;
-        return {
-          ...todo,
-          isComplited: !todo.isComplited,
-        };
-      }
-    );
+    const switchState = todos.map(todo => {
+      if (todo.id !== todoId) return todo;
+      return {
+        ...todo,
+        isComplited: !todo.isComplited,
+      };
+    });
     setTodos(switchState);
   };
 
@@ -73,7 +50,7 @@ function TodoContainer() {
         };
       }
     );
-    setTodos (switchState);
+    setTodos(switchState);
   };
 
   const switchFocusInput = (todoId) => {
@@ -89,7 +66,7 @@ function TodoContainer() {
     setTodos(switchFocus);
   };
 
-  const blurInput = (todoId)=> {
+  const blurInput = (todoId) => {
     const blur = todos.map(
       todo => {
         if (todo.id !== todoId) return todo;
@@ -102,33 +79,56 @@ function TodoContainer() {
     setTodos(blur);
   };
 
-  // const filteredTodos = todos.filter(i => {
-  //   if (filter === 'completed') {
-  //     return i.isComplited
-  //   }
-  // })
+  const clearComplited = () => {
+    const active = todos.filter(todo => !todo.isComplited);
+    setTodos(active);
+  };
+
+  const complitedTodo = () => {
+    setFilter('completed');
+  };
+  const activeTodo = () => {
+    setFilter('active');
+  };
+  const allTodo = () => {
+    setFilter('all');
+  };
+
+  const filteredTodos = useMemo(() => {
+    if (filter === 'all') return todos;
+    return todos.filter(i => {
+      if (filter === 'completed') {
+        return i.isComplited
+      }
+      return !i.isComplited
+    });
+  }, [todos, filter]);
 
   return (
     <section className={styles.todoapp}>
-      <Input text={text} 
-      setText={setText} 
-      addTodo={addTodo} 
-      changingStateArrow={changingStateArrow}
+      <Input
+        text={text}
+        setText={setText}
+        addTodo={addTodo}
+        changingStateArrow={changingStateArrow}
       />
-      <TodoList todos={filtred}
+      <TodoList
+        todos={filteredTodos}
         removeTodo={removeTodo}
         switchTodoCompleted={switchTodoCompleted}
         swtchFocusInput={switchFocusInput}
         blurInput={blurInput}
       />
-      <Footer todos={todos}
+      <Footer
+        todos={todos}
+        filter={filter}
         allTodo={allTodo}
-        activeTodo={activeTodo} 
+        activeTodo={activeTodo}
         complitedTodo={complitedTodo}
         clearComplited={clearComplited}
-        />
+      />
     </section>
   );
-}
+};
 
 export default TodoContainer;

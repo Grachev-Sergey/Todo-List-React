@@ -2,7 +2,8 @@ import styles from './Header.module.css'
 
 function Header() {
   return (
-    <div className={styles.title}>todos
+    <div className={styles.title}>
+      todos
     </div>
   );
 }

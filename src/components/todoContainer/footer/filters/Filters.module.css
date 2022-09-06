@@ -10,10 +10,22 @@
   cursor: pointer;
 }
 
-.selected {
+
+.button:not(:last-child){
+  margin-right: 15px;
+}
+
+.buttonSelected {
+  color: #777;
+  background-color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 3px 7px;
+  border: 1px solid transparent;
+  border-radius: 3px;
   border-color: rgba(175, 47, 47, 0.2);
 }
 
-.button:not(:last-child){
+.buttonSelected:not(:last-child){
   margin-right: 15px;
 }
