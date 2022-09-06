@@ -1,7 +1,7 @@
 import styles from './TodoList.module.css'
 import TodoElem from './todoElem/TodoElem';
 
-function TodoList({ todos, removeTodo, switchTodoCompleted }) {
+function TodoList({ todos, removeTodo, switchTodoCompleted, swtchFocusInput, blurInput}) {
   return (
     <ul className={styles.todoList}>
       {
@@ -11,6 +11,8 @@ function TodoList({ todos, removeTodo, switchTodoCompleted }) {
             removeTodo={removeTodo}
             switchTodoCompleted={switchTodoCompleted}
             todo={todo}
+            swtchFocusInput={swtchFocusInput}
+            blurInput={blurInput}
           />
         ))
       }

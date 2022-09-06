@@ -22,6 +22,7 @@ function TodoContainer() {
         id: new Date().toISOString(),
         text,
         isComplited: false,
+        focused: false,
       }
     ]);
     setText('');
@@ -64,20 +65,54 @@ function TodoContainer() {
   };
 
   const changingStateArrow = () => {
-
+    let arrayState = [];
+    todos.map(todo => arrayState.push(todo.isComplited))
     setTodos (
       todos.map((todo) => {
+        if (!arrayState.includes(false))
+        return{
+          ...todo,
+          isComplited: false,
+        }
         if (!todo.isComplited) 
         return {
           ...todo,
           isComplited: true,
-        }
+        } 
         if(todo.isComplited)
         return{
           ...todo,
           isComplited: true,
         }
       })
+    )
+  };
+
+  const swtchFocusInput = (todoId) => {
+    setTodos(
+      todos.map(
+        todo => {
+          if (todo.id !== todoId) return todo;
+          return {
+            ...todo,
+            focused: !todo.focused,
+          };
+        }
+      )
+    )
+  };
+
+  const blurInput = (todoId)=> {
+    setTodos(
+      todos.map(
+        todo => {
+          if (todo.id !== todoId) return todo;
+          return {
+            ...todo,
+            focused: false,
+          };
+        }
+      )
     )
   };
 
@@ -91,6 +126,8 @@ function TodoContainer() {
       <TodoList todos={filtred}
         removeTodo={removeTodo}
         switchTodoCompleted={switchTodoCompleted}
+        swtchFocusInput={swtchFocusInput}
+        blurInput={blurInput}
       />
       <Footer todos={todos}
         allTodo={allTodo}
