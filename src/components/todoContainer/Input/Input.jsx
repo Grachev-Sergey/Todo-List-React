@@ -1,18 +1,33 @@
-import styles from './Input.module.css'
-import arrow from './arrowDown.png'
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addTask, changingArrow } from '../../../redux/TaskSlice';
+import styles from './Input.module.css';
+import arrow from './arrowDown.png';
 
-function Input({
-  text,
-  setText,
-  addTodo,
-  changingStateArrow,
-}) {
+function Input() {
+
+  const [text, setText] = useState(''); 
+  const dispatch = useDispatch();
+
   const createTodoElem = (event) => {
     event.preventDefault();
-    addTodo();
+
+    if (!text.trim()) return;
+
+    dispatch(
+      addTask({
+        tasks: text,
+      })
+    )
+
+    setText('');
   };
+  
+const changingStateArrow = () => dispatch(changingArrow());
+
+
   const changeText = (elem) => {
-    setText(elem.target.value)
+    setText(elem.target.value);
   };
 
   return (

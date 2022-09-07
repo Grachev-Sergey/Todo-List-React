@@ -1,24 +1,18 @@
-import styles from './TodoList.module.css'
+import styles from './TodoList.module.css';
 import TodoElem from './todoElem/TodoElem';
 
-function TodoList({
-  todos,
-  removeTodo,
-  switchTodoCompleted,
-  swtchFocusInput,
-  blurInput,
-}) {
+function TodoList({todos}) {
+
   return (
     <ul className={styles.todoList}>
       {
         todos.map(todo => (
           <TodoElem
+            id={todo.id}
+            value={todo.value}
+            status={todo.complited}
             key={todo.id}
-            removeTodo={removeTodo}
-            switchTodoCompleted={switchTodoCompleted}
-            todo={todo}
-            swtchFocusInput={swtchFocusInput}
-            blurInput={blurInput}
+            focused={todo.focused}
           />
         ))
       }

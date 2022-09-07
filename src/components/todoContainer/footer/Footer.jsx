@@ -1,3 +1,5 @@
+import { useDispatch } from 'react-redux';
+import { leaveActiveTasks } from '../../../redux/TaskSlice';
 import styles from './Footer.module.css';
 import Filters from './filters/Filters';
 
@@ -8,9 +10,13 @@ function Footer ({
   activeTodo, 
   allTodo, 
   complitedTodo, 
-  clearComplited,
 }) {
-  let numActiveTodos = todos.filter(todo => !todo.isComplited);
+
+  const dispatch = useDispatch();
+
+  const clearComplited = () => dispatch(leaveActiveTasks());
+
+  let numActiveTodos = todos.filter(todo => !todo.complited);
 
   return (
     <div className={styles.footer}>
@@ -26,7 +32,7 @@ function Footer ({
       />
       <button
         className={styles.button}
-        onClick={() => clearComplited()}
+        onClick={clearComplited}
       >
         Clear complited
       </button>
