@@ -1,7 +1,11 @@
-import styles from './TodoList.module.css';
-import TodoElem from './todoElem/TodoElem';
+import { useSelector } from 'react-redux';
+import filteredTodos from '../../../redux/selectors';
+import styles from './todoList.module.css';
+import TodoElem from './todoElem';
 
-function TodoList({todos}) {
+function TodoList() {
+  const state = useSelector(state => state.todos);
+  const todos = filteredTodos(state);
 
   return (
     <ul className={styles.todoList}>
@@ -12,7 +16,6 @@ function TodoList({todos}) {
             value={todo.value}
             status={todo.complited}
             key={todo.id}
-            focused={todo.focused}
           />
         ))
       }

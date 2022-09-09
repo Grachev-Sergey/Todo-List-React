@@ -1,30 +1,25 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addTask, changingArrow } from '../../../redux/TaskSlice';
-import styles from './Input.module.css';
-import arrow from './arrowDown.png';
+import { addTask, changingArrow } from '../../../redux/taskSlice';
+import styles from './inputField.module.css';
+import arrow from '../../../imgs/arrowDown.png';
 
-function Input() {
-
+function InputField() {
   const [text, setText] = useState(''); 
   const dispatch = useDispatch();
 
   const createTodoElem = (event) => {
     event.preventDefault();
-
     if (!text.trim()) return;
-
     dispatch(
       addTask({
-        tasks: text,
+        todoText: text,
       })
-    )
-
+    );
     setText('');
   };
   
-const changingStateArrow = () => dispatch(changingArrow());
-
+  const changingStateArrow = () => dispatch(changingArrow());
 
   const changeText = (elem) => {
     setText(elem.target.value);
@@ -55,4 +50,4 @@ const changingStateArrow = () => dispatch(changingArrow());
   );
 }
 
-export default Input;
+export default InputField;

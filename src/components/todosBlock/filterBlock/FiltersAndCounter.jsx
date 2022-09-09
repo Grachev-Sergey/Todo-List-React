@@ -1,17 +1,11 @@
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { leaveActiveTasks } from '../../../redux/TaskSlice';
-import styles from './Footer.module.css';
-import Filters from './filters/Filters';
+import { leaveActiveTasks } from '../../../redux/taskSlice';
+import styles from './filtersAndCounter.module.css';
+import Filters from './filters';
 
-
-function Footer ({
-  todos, 
-  filter, 
-  activeTodo, 
-  allTodo, 
-  complitedTodo, 
-}) {
-
+function FiltersAndCounter () {
+  const todos = useSelector(state => state.todos.tasks);
   const dispatch = useDispatch();
 
   const clearComplited = () => dispatch(leaveActiveTasks());
@@ -25,11 +19,7 @@ function Footer ({
         {numActiveTodos.length === 1 ? ' item ' : ' items '}
         left
       </span>
-      <Filters filter={filter}
-       activeTodo={activeTodo}
-       allTodo={allTodo}
-       complitedTodo={complitedTodo}
-      />
+      <Filters/>
       <button
         className={styles.button}
         onClick={clearComplited}
@@ -40,4 +30,4 @@ function Footer ({
   );
 };
 
-export default Footer
+export default FiltersAndCounter
